@@ -1,3 +1,6 @@
+import copy
+
+
 # define list of interactable tags
 interactable_tags = [
     "a",
@@ -17,3 +20,10 @@ extractable_tags = [
     "div",
     "ytd-transcript-segment-renderer"
 ]
+
+
+def remove_children(element):
+    _element = copy.deepcopy(element)
+    for sub_element in _element.findChildren():
+        sub_element.clear()
+    return _element
