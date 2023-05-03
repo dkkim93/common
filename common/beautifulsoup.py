@@ -30,6 +30,20 @@ def remove_children(element):
     return _element
 
 
+def find_extractable_elements(driver):
+    # initialize beautifulsoup object
+    soup = BeautifulSoup(driver.page_source, features="html.parser")
+
+    # find all elements that are interactable
+    elements, elements_str = [], []
+    for tag in interactable_tags:
+        for element in soup.find_all(tag):
+            elements.append(element)
+            elements_str.append(str(element).strip())
+
+    return elements, elements_str
+
+
 def find_interactable_elements(driver, is_format):
     # initialize beautifulsoup object
     soup = BeautifulSoup(driver.page_source, features="html.parser")
