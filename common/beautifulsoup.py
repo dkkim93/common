@@ -40,6 +40,6 @@ def find_interactable_elements(driver, is_format):
         for element in soup.find_all(tag):
             elements.append(element)
             element_str = remove_children(element) if is_format else element
-            elements_str.append(str(element_str).strip())
+            elements_str.append(str(element_str).replace("\n", ""))
 
     return elements, elements_str
