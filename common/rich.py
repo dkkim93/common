@@ -7,7 +7,9 @@ def get_logger():
         level="NOTSET",
         format="%(message)s",
         datefmt="[%X]",
-        handlers=[RichHandler()]
+        handlers=[RichHandler(
+            markup=True,
+            rich_tracebacks=True)]
     )
     logger = logging.getLogger("rich")
     return logger
