@@ -26,7 +26,7 @@ extractable_tags = [
 def remove_children(element):
     _element = copy.deepcopy(element)
     for sub_element in _element.findChildren():
-        sub_element.clear()
+        sub_element.decompose()
     return _element
 
 
@@ -40,6 +40,6 @@ def find_interactable_elements(driver, is_format):
         for element in soup.find_all(tag):
             elements.append(element)
             element_str = remove_children(element) if is_format else element
-            elements_str.append(str(element_str))
+            elements_str.append(str(element_str).strip())
 
     return elements, elements_str
