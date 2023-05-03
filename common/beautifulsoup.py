@@ -1,4 +1,5 @@
 import copy
+from bs4 import BeautifulSoup
 
 
 # define list of interactable tags
@@ -27,3 +28,18 @@ def remove_children(element):
     for sub_element in _element.findChildren():
         sub_element.clear()
     return _element
+
+
+def find_interactable_elements(driver, is_format):
+    # initialize beautifulsoup object
+    soup = BeautifulSoup(driver.page_source, features="html.parser")
+
+    # find all elements that are interactable
+    elements, elements_str = [], []
+    for tag in interactable_tags:
+        for element in soup.find_all(tag):
+            elements.append(element)
+            element_str = remove_children(element) if is_format else element
+            elements_str.append(str(element_str))
+
+    return elements, elements_str
