@@ -36,7 +36,7 @@ def find_extractable_elements(driver):
 
     # find all elements that are interactable
     elements, elements_str = [], []
-    for tag in interactable_tags:
+    for tag in extractable_tags:
         for element in soup.find_all(tag):
             elements.append(element)
             elements_str.append(str(element).strip())
