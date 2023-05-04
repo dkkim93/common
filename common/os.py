@@ -1,10 +1,6 @@
 import os
-import errno
 
 
 def remove_file(filename):
-    try:
+    if os.path.exists(filename):
         os.remove(filename)
-    except OSError as e:
-        if e.errno != errno.ENOENT:
-            raise
