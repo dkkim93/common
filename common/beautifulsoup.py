@@ -93,28 +93,28 @@ def format_element(soup, element):
         4. For target element, do nothing
     """
     parent_element = copy.deepcopy(element.parent)
-    cleanup_element(parent_element)
+    cleanup_attribute(parent_element)
 
     for sibling_element in parent_element.children:
         if not isinstance(sibling_element, bs4.element.NavigableString):
             # remove irrelevant attributes
-            cleanup_element(sibling_element)
+            cleanup_attribute(sibling_element)
 
             # print only sibling's children (1-depth)
             if sibling_element.get("target_element") is None:
                 for sibling_element_child in sibling_element.children:
-                    cleanup_element(sibling_element_child)
+                    cleanup_attribute(sibling_element_child)
                     remove_children(sibling_element_child, copy=False)
     return parent_element
 
 
-def cleanup_html(soup):
+def cleanup_tag(soup):
     for tag in irrelevant_tags:
         for element in soup.findAll(tag):
             element.extract()
 
 
-def cleanup_element(element):
+def cleanup_attribute(element):
     if not isinstance(element, bs4.element.NavigableString):
         for attribute in irrelevant_attributes:
             if element.get(attribute) is not None:
@@ -126,7 +126,7 @@ def find_interactable_elements(driver, is_format):
     soup = BeautifulSoup(driver.page_source, features="html.parser")
 
     # cleanup html by removing irrelevant tags (svg, style)
-    cleanup_html(soup)
+    cleanup_tag(soup)
 
     # find all elements that are interactable
     elements, elements_str = [], []
